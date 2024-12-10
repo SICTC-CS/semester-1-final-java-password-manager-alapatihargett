@@ -3,10 +3,10 @@ import java.util.Objects;
 public class PasswordRecord {
     private String accountName;
     private String username;
-    private String password; // Consider storing a hashed version
+    private String password;
     private String category;
 
-    public PasswordRecord(String accountName, String username, String password, String category) {
+    public PasswordRecord(String accountName, String username, String password, String category) { 
         if (accountName == null || accountName.isEmpty() ||
             username == null || username.isEmpty() ||
             password == null || password.isEmpty() ||
@@ -15,10 +15,10 @@ public class PasswordRecord {
         }
         this.accountName = accountName;
         this.username = username;
-        this.password = password; // Store hashed password if implemented
+        this.password = password; 
         this.category = category;
     }
-
+    // getters
     public String getAccountName() {
         return accountName;
     }
@@ -28,7 +28,7 @@ public class PasswordRecord {
     }
 
     public String getPassword() {
-        return password; // Consider returning a masked version or not exposing this directly
+        return password;
     }
 
     public String getCategory() {
@@ -41,7 +41,7 @@ public class PasswordRecord {
                 "accountName='" + accountName + '\'' +
                 ", username='" + username + '\'' +
                 ", category='" + category + '\'' +
-                '}'; // Omitting password for security reasons
+                '}'; // omitting password for security reasons
     }
 
     @Override
@@ -60,4 +60,4 @@ public class PasswordRecord {
     public int hashCode() {
         return Objects.hash(accountName, username, password, category);
     }
-}
+} 
