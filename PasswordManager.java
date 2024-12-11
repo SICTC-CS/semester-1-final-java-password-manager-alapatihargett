@@ -125,7 +125,7 @@ public class PasswordManager {
         try {
             // Ensure directory exists
             File file = new File(DATA_FILE);
-            file.getParentFile().mkdirs(); // create directories if they don't exist -- shouldn't be neccesary but if cloning issues happen then this could fix it
+            //file.getParentFile().mkdirs(); // create directories if they don't exist -- shouldn't be neccesary but if cloning issues happen then this could fix it
             
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                 for (PasswordRecord record : passwordRecords) {
