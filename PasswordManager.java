@@ -170,20 +170,39 @@ public class PasswordManager {
         return false;
     }
 
-    private void saveUserToFile(User user) { // saving to file
+    private void saveUserToFile(User user) {
         try {
             // ensure directory exists
             File file = new File(USERS_FILE);
-            file.getParentFile().mkdirs(); // create directories if they don't exist
+            if (file.getParentFile() != null) {
+                file.getParentFile().mkdirs();
+            }
             
-            // add user to file
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
-                writer.write(String.format("%s,%s,%s,%s,%s\n",
-                    user.getUsername(),
-                    user.getPassword(),
-                    user.getFirstName(),
-                    user.getLastName(),
-                    user.getPasswordHint()));
+            // read existing users
+            List<String> existingLines = new ArrayList<>();
+            if (file.exists()) {
+                try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        existingLines.add(line);
+                    }
+                }
+            }
+            
+            // add new user
+            existingLines.add(String.format("%s,%s,%s,%s,%s",
+                user.getUsername(),
+                user.getPassword(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getPasswordHint()));
+                
+            // write all users back to file
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                for (String line : existingLines) {
+                    writer.write(line);
+                    writer.newLine();
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException("Failed to save user: " + e.getMessage());
